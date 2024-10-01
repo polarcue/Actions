@@ -98,6 +98,14 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
+    - name: my-artifact
+      uses: actions/download-artifact@v4
+      with:
+         path: workdir/openwrt/dl
+      
+    - name: Display structure of downloaded files
+      run: ls -R workdir/openwrt/dl
+
     - name: Compile the firmware
       id: compile
       run: |
