@@ -97,7 +97,7 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        ls -R /workdir/openwrt/build_dir/host
+        ls  /workdir/openwrt/build_dir/host
 
     - name: my-artifact
       uses: actions/download-artifact@v4
@@ -117,7 +117,7 @@ jobs:
       if: (!cancelled())
       run:  |
         cd  /workdir/openwrt/build_dir/host/m4-1.4.18
-        ls -R /workdir/openwrt/build_dir/host
+        ls  /workdir/openwrt/build_dir/host
         sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
         echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
 
@@ -131,7 +131,7 @@ jobs:
     - name: fix fseterr
       if: (!cancelled())
       run:  |
-        ls -R /workdir/openwrt/build_dir/host
+        ls  /workdir/openwrt/build_dir/host
         cd /workdir/openwrt/build_dir/host/bison-3.0.4
         sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
         echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
