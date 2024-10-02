@@ -131,8 +131,8 @@ jobs:
     - name: fix fseterr
       if: (!cancelled())
       run:  |
-        ls -R /workdir/openwrt/build_dir/host/bison-3.0.4
-        cd build_dir/host/bison-3.0.2/
+        ls -R /workdir/openwrt/build_dir/host
+        cd /workdir/openwrt/build_dir/host/bison-3.0.4
         sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
         echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
 
