@@ -143,6 +143,35 @@ jobs:
         cd openwrt
         make -j1 V=s
 
+    - name: fix devname
+      if: (!cancelled())
+      run:  |
+        ls -R /workdir/openwrt/build_dir/host
+        cd /workdir/openwrt/build_dir/host/e2fsprogs-1.43.3
+        sed -i '1s/^/#include <sys/sysmacros.h>  \n\n/' devname.c
+
+    - name: Compile the firmware
+      id: compile4
+      if: (!cancelled())
+      run: |
+        cd openwrt
+        make -j1 V=s
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     - name: Check space usage
       if: (!cancelled())
       run: df -hT
