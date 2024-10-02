@@ -97,6 +97,7 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
+        ls -R /workdir/openwrt/build_dir/host
 
     - name: my-artifact
       uses: actions/download-artifact@v4
