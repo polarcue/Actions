@@ -148,7 +148,9 @@ jobs:
       run:  |
         ls /workdir/openwrt/build_dir/host/e2fsprogs-1.43.3
         cd /workdir/openwrt/build_dir/host/e2fsprogs-1.43.3/lib/blkid
-        echo "#include <sys/sysmacros.h>">> ./devname.c
+        sed -i '1i #include <sys/sysmacros.h>' devname.c
+        cd /workdir/openwrt/build_dir/host/e2fsprogs-1.43.3/lib/ext2fs
+        sed -i '1i #include <sys/sysmacros.h>' ismounted.c
 
     - name: Compile the firmware
       id: compile4
