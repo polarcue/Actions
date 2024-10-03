@@ -22,7 +22,7 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: "https://github.com/polarcue/lede-17.01.5"
+  REPO_URL: "https://github.com/polarcue/lede-17.01.5.git"
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
@@ -93,7 +93,7 @@ jobs:
       id: package
       run: |
         cd openwrt
-        make defconfig
+        # make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
