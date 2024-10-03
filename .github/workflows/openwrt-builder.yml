@@ -159,16 +159,8 @@ jobs:
         
         cd /workdir/openwrt/build_dir/host/e2fsprogs-1.43.3/debugfs
         sed -i '1i #include <sys/sysmacros.h>' debugfs.c
+
         
-        cd /workdir/openwrt/build_dir/host/findutils-4.4.2
-        sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
-        echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
- 
-        sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' gnulib/lib/*.c
-        echo "#define _IO_IN_BACKUP 0x100" >> gnulib/lib/stdio-impl.h
-        echo "#define _IO_ferror_unlocked" >> gnulib/lib/stdio-impl.h
-        sed -i '/unistd/a #include <sys/sysmacros.h>' gnulib/lib/mountlist.c
-  
     - name: Compile the firmware
       id: compile4
       if: (!cancelled())
@@ -177,18 +169,19 @@ jobs:
         make -j1 V=s
 
         
-    - name: fix devname
+    - name: fix findutils
       if: (!cancelled())
       run:  |
+        ls -R /workdir/openwrt/build_dir/host/findutils-4.6.0
         
         cd /workdir/openwrt/build_dir/host/findutils-4.6.0
         sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
         echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
  
-        sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' gnulib/lib/*.c
-        echo "#define _IO_IN_BACKUP 0x100" >> gnulib/lib/stdio-impl.h
-        echo "#define _IO_ferror_unlocked" >> gnulib/lib/stdio-impl.h
-        sed -i '/unistd/a #include <sys/sysmacros.h>' gnulib/lib/mountlist.c
+        sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' gl/lib/*.c
+        echo "#define _IO_IN_BACKUP 0x100" >> gl/lib/stdio-impl.h
+        echo "#define _IO_ferror_unlocked" >> gl/lib/stdio-impl.h
+        sed -i '/unistd/a #include <sys/sysmacros.h>' gl/lib/mountlist.c
 
         
     - name: Compile the firmware
