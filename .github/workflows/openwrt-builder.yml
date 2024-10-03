@@ -147,17 +147,52 @@ jobs:
       if: (!cancelled())
       run:  |
         ls /workdir/openwrt/build_dir/host/e2fsprogs-1.43.3
+        
         cd /workdir/openwrt/build_dir/host/e2fsprogs-1.43.3/lib/blkid
         sed -i '1i #include <sys/sysmacros.h>' devname.c
+        
         cd /workdir/openwrt/build_dir/host/e2fsprogs-1.43.3/lib/ext2fs
         sed -i '1i #include <sys/sysmacros.h>' ismounted.c
+        
         cd /workdir/openwrt/build_dir/host/e2fsprogs-1.43.3/misc
         sed -i '1i #include <sys/sysmacros.h>' create_inode.c
+        
         cd /workdir/openwrt/build_dir/host/e2fsprogs-1.43.3/debugfs
         sed -i '1i #include <sys/sysmacros.h>' debugfs.c
-
+        
+        cd /workdir/openwrt/build_dir/host/findutils-4.4.2
+        sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
+        echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
+ 
+        sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' gnulib/lib/*.c
+        echo "#define _IO_IN_BACKUP 0x100" >> gnulib/lib/stdio-impl.h
+        echo "#define _IO_ferror_unlocked" >> gnulib/lib/stdio-impl.h
+        sed -i '/unistd/a #include <sys/sysmacros.h>' gnulib/lib/mountlist.c
+  
     - name: Compile the firmware
       id: compile4
+      if: (!cancelled())
+      run: |
+        cd openwrt
+        make -j1 V=s
+
+        
+    - name: fix devname
+      if: (!cancelled())
+      run:  |
+        
+        cd /workdir/openwrt/build_dir/host/findutils-4.6.0
+        sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
+        echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
+ 
+        sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' gnulib/lib/*.c
+        echo "#define _IO_IN_BACKUP 0x100" >> gnulib/lib/stdio-impl.h
+        echo "#define _IO_ferror_unlocked" >> gnulib/lib/stdio-impl.h
+        sed -i '/unistd/a #include <sys/sysmacros.h>' gnulib/lib/mountlist.c
+
+        
+    - name: Compile the firmware
+      id: compile5
       if: (!cancelled())
       run: |
         cd openwrt
