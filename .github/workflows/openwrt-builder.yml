@@ -111,7 +111,7 @@ jobs:
       id: compile1
       run: |
         cd openwrt
-        make -j4 V=s
+        make -j1 V=s
 
     - name: fix ffreadahead
       if: (!cancelled())
@@ -126,7 +126,7 @@ jobs:
       if: (!cancelled())
       run: |
         cd openwrt
-        make -j4 V=s
+        make -j1 V=s
         
     - name: fix fseterr
       if: (!cancelled())
@@ -141,7 +141,7 @@ jobs:
       if: (!cancelled())
       run: |
         cd openwrt
-        make -j4 V=s
+        make -j1 V=s
 
     - name: fix devname
       if: (!cancelled())
@@ -166,7 +166,7 @@ jobs:
       if: (!cancelled())
       run: |
         cd openwrt
-        make -j4 V=s
+        make -j1 V=s
 
         
     - name: fix findutils
@@ -189,7 +189,7 @@ jobs:
       if: (!cancelled())
       run: |
         cd openwrt
-        make -j4 V=s
+        make -j1 V=s
     
     - name: Check space usage
       if: (!cancelled())
