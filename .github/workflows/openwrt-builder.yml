@@ -22,7 +22,7 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: "https://github.com/polarcue/lede-17.01.5.git"
+  REPO_URL: "https://github.com/imbrolla/lede-17.01.git"
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
@@ -111,7 +111,7 @@ jobs:
       id: compile1
       run: |
         cd openwrt
-        make -j1 V=s
+        make -j4 V=s
 
     - name: fix ffreadahead
       if: (!cancelled())
@@ -126,7 +126,7 @@ jobs:
       if: (!cancelled())
       run: |
         cd openwrt
-        make -j1 V=s
+        make -j4 V=s
         
     - name: fix fseterr
       if: (!cancelled())
@@ -141,7 +141,7 @@ jobs:
       if: (!cancelled())
       run: |
         cd openwrt
-        make -j1 V=s
+        make -j4 V=s
 
     - name: fix devname
       if: (!cancelled())
@@ -166,7 +166,7 @@ jobs:
       if: (!cancelled())
       run: |
         cd openwrt
-        make -j1 V=s
+        make -j4 V=s
 
         
     - name: fix findutils
@@ -189,7 +189,7 @@ jobs:
       if: (!cancelled())
       run: |
         cd openwrt
-        make -j1 V=s
+        make -j4 V=s
     
     - name: Check space usage
       if: (!cancelled())
